@@ -1,0 +1,144 @@
+@import "tailwindcss";
+
+/* Boy theme — soft blue */
+[data-theme="boy"] {
+  --theme-page: #dbeafe;
+  --theme-surface: #eff6ff;
+  --theme-surface-hover: #dbeafe;
+  --theme-surface-elevated: #bfdbfe;
+  --theme-nav: #dbeafe;
+  --theme-brand: #3b82f6;
+  --theme-brand-hover: #2563eb;
+  --theme-brand-strong: #1d4ed8;
+  --theme-brand-soft: #93c5fd;
+  --theme-brand-ring: #bfdbfe;
+  --theme-border: #93c5fd;
+  --theme-border-subtle: #bfdbfe;
+  --theme-text: #0f172a;
+  --theme-muted: #475569;
+  --theme-auth-from: #dbeafe;
+  --theme-auth-via: #eff6ff;
+  --theme-auth-to: #e0f2fe;
+  --theme-grid-line: #bfdbfe;
+  --theme-today-header: #bfdbfe;
+  --theme-slot-hover: rgb(59 130 246 / 0.12);
+}
+
+/* Girl theme — soft pink */
+[data-theme="girl"] {
+  --theme-page: #fce7f3;
+  --theme-surface: #fff1f7;
+  --theme-surface-hover: #fce7f3;
+  --theme-surface-elevated: #fbcfe8;
+  --theme-nav: #fce7f3;
+  --theme-brand: #ec4899;
+  --theme-brand-hover: #db2777;
+  --theme-brand-strong: #be185d;
+  --theme-brand-soft: #f9a8d4;
+  --theme-brand-ring: #fbcfe8;
+  --theme-border: #f9a8d4;
+  --theme-border-subtle: #fbcfe8;
+  --theme-text: #0f172a;
+  --theme-muted: #64748b;
+  --theme-auth-from: #fce7f3;
+  --theme-auth-via: #fff1f7;
+  --theme-auth-to: #fdf2f8;
+  --theme-grid-line: #fbcfe8;
+  --theme-today-header: #fbcfe8;
+  --theme-slot-hover: rgb(236 72 153 / 0.12);
+}
+
+@layer base {
+  html {
+    color-scheme: light;
+  }
+
+  body {
+    background-color: var(--theme-page);
+    color: var(--theme-text);
+    @apply antialiased;
+  }
+}
+
+@layer utilities {
+  .bg-theme-page {
+    background-color: var(--theme-page);
+  }
+  .bg-theme-surface {
+    background-color: var(--theme-surface);
+  }
+  .bg-theme-surface-hover {
+    background-color: var(--theme-surface-hover);
+  }
+  .bg-theme-surface-elevated {
+    background-color: var(--theme-surface-elevated);
+  }
+  .bg-theme-nav {
+    background-color: var(--theme-nav);
+  }
+  .bg-theme-brand {
+    background-color: var(--theme-brand);
+  }
+  .bg-theme-brand-soft {
+    background-color: var(--theme-brand-soft);
+  }
+  .bg-theme-today {
+    background-color: var(--theme-today-header);
+  }
+  .bg-theme-surface-95 {
+    background-color: color-mix(in srgb, var(--theme-surface) 95%, transparent);
+  }
+  .bg-theme-surface-elevated-95 {
+    background-color: color-mix(in srgb, var(--theme-surface-elevated) 95%, transparent);
+  }
+  .bg-theme-today-95 {
+    background-color: color-mix(in srgb, var(--theme-today-header) 95%, transparent);
+  }
+  .bg-theme-auth {
+    background: linear-gradient(
+      to bottom right,
+      var(--theme-auth-from),
+      var(--theme-auth-via),
+      var(--theme-auth-to)
+    );
+  }
+  .border-theme {
+    border-color: var(--theme-border);
+  }
+  .border-theme-subtle {
+    border-color: var(--theme-border-subtle);
+  }
+  .text-theme-body {
+    color: var(--theme-text);
+  }
+  .text-theme-muted {
+    color: var(--theme-muted);
+  }
+  .text-theme-brand {
+    color: var(--theme-brand);
+  }
+  .text-theme-brand-strong {
+    color: var(--theme-brand-strong);
+  }
+  .hover\:bg-theme-surface-hover:hover {
+    background-color: var(--theme-surface-hover);
+  }
+  .hover\:bg-theme-brand-hover:hover {
+    background-color: var(--theme-brand-hover);
+  }
+  .hover\:text-theme-brand-strong:hover {
+    color: var(--theme-brand-strong);
+  }
+  .focus\:border-theme-brand:focus {
+    border-color: var(--theme-brand);
+  }
+  .focus\:ring-theme:focus {
+    --tw-ring-color: var(--theme-brand-ring);
+  }
+  .hover\:bg-theme-slot:hover {
+    background-color: var(--theme-slot-hover);
+  }
+  .border-theme-grid {
+    border-color: var(--theme-grid-line);
+  }
+}
