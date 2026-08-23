@@ -1,0 +1,22 @@
+{
+  "name": "babycheck",
+  "private": true,
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "dev": "concurrently -n api,web -c blue,green \"npm run dev -w @babycheck/api\" \"npm run dev -w @babycheck/web\"",
+    "build": "npm run build -w @babycheck/shared && npm run build -w @babycheck/api && npm run build -w @babycheck/web",
+    "db:up": "docker compose up -d",
+    "db:down": "docker compose down",
+    "db:migrate": "npm run db:migrate -w @babycheck/api",
+    "db:generate": "npm run db:generate -w @babycheck/api",
+    "db:studio": "npm run db:studio -w @babycheck/api",
+    "lint": "npm run lint --workspaces --if-present"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2",
+    "typescript": "^5.8.3"
+  }
+}
