@@ -14,6 +14,7 @@ export const events = pgTable("events", {
   occurredAt: timestamp("occurred_at", { withTimezone: true }).notNull(),
   payload: jsonb("payload").notNull().default({}),
   notes: text("notes"),
+  deletedAt: timestamp("deleted_at", { withTimezone: true }),
   createdAt: timestamp("created_at", { withTimezone: true })
     .defaultNow()
     .notNull(),
