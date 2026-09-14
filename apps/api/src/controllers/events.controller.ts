@@ -1,6 +1,7 @@
 import type { Request, Response, NextFunction } from "express";
 import type {
   CreateEventInput,
+  CreateEventsBatchInput,
   ListEventsQuery,
   UpdateEventInput,
 } from "@babycheck/shared";
@@ -44,6 +45,24 @@ export async function create(req: Request, res: Response, next: NextFunction) {
   }
 }
 
+export async function createBatch(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  try {
+    const input = req.body as CreateEventsBatchInput;
+    const events = await eventsService.createEventsBatch(
+      req.user!.userId,
+      getParam(req, "babyId"),
+      input
+    );
+    res.status(201).json({ events });
+  } catch (error) {
+    next(error);
+  }
+}
+
 export async function update(req: Request, res: Response, next: NextFunction) {
   try {
     const input = req.body as UpdateEventInput;
@@ -60,8 +79,23 @@ export async function update(req: Request, res: Response, next: NextFunction) {
 
 export async function remove(req: Request, res: Response, next: NextFunction) {
   try {
-    await eventsService.deleteEvent(req.user!.userId, getParam(req, "id"));
-    res.status(204).send();
+    const event = await eventsService.deleteEvent(
+      req.user!.userId,
+      getParam(req, "id")
+    );
+    res.json({ event });
+  } catch (error) {
+    next(error);
+  }
+}
+
+export async function restore(req: Request, res: Response, next: NextFunction) {
+  try {
+    const event = await eventsService.restoreEvent(
+      req.user!.userId,
+      getParam(req, "id")
+    );
+    res.json({ event });
   } catch (error) {
     next(error);
   }
