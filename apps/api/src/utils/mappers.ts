@@ -47,6 +47,7 @@ export function mapEvent(row: EventRow): BabyEvent {
     occurredAt: row.occurredAt.toISOString(),
     payload: row.payload as BabyEvent["payload"],
     notes: row.notes,
+    deletedAt: row.deletedAt ? row.deletedAt.toISOString() : null,
     createdAt: row.createdAt.toISOString(),
     updatedAt: row.updatedAt.toISOString(),
   };
