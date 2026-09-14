@@ -46,6 +46,39 @@ BabyCheckapp/
 - **Boy / girl theme** toggle (blue / pink) with CSS variables
 - **Responsive layout**: sticky top nav, bottom nav on mobile, slide-in drawers for filters and to-dos
 
+### Today, trends & export
+
+- **Today dashboard**: feeds, diapers, sleep, meds, pumping, and **time since last feed**
+- **Browser feed reminders** (configurable hours + notification permission)
+- **Trends charts** (7 / 14 / 30 days): feedings & diapers, sleep minutes, weight curve
+- **Export CSV** and **Print / PDF** from Today (and CSV from Trends)
+
+### Caregivers & milestones
+
+- **Invite caregivers** by email (shared baby diary); accept invites from Profile
+- **Milestones / notes**: first smile, first tooth, free-form journal entries
+
+### Search, calendar & quick actions
+
+- **Search events** by notes, medication name, type, and date range
+- **Month calendar** with per-day event counts
+- **Quick-log presets** (bottle, breast, diaper, naps) one-tap logging
+- **Undo soft-delete** toast after deleting an event
+- **Optimistic UI** for diary drag-and-drop and batch multi-event create
+
+### Themes, i18n & PWA
+
+- Boy / girl themes plus **dark mode**
+- **English / Greek** UI language toggle
+- **PWA** install + offline queue for event creates (syncs when back online)
+- **Onboarding** when no baby profile exists
+- Clearer **empty states** on the diary
+
+### Insights extras
+
+- Approximate **WHO weight-for-age** comparison on Trends
+- **Sleep window suggestions** by baby age on Today
+
 ### Logging & editing events
 
 - **Log events** modal (blur overlay) — log **multiple events at the same timestamp** in one save
@@ -172,13 +205,23 @@ BabyCheckapp/
 | GET/POST | `/api/babies/:babyId/events` | Yes | List / log events (query: `from`, `to`, `type`, `limit`, `offset`) |
 | GET/PATCH/DELETE | `/api/events/:id` | Yes | Single event |
 | GET | `/api/babies/:babyId/stats/today` | Yes | Today's summary |
+| GET/POST | `/api/babies/:babyId/milestones` | Yes | List / create milestones |
+| PATCH/DELETE | `/api/milestones/:id` | Yes | Update / delete milestone |
+| GET/POST | `/api/babies/:id/invites` | Yes | List / create caregiver invites (owner) |
+| GET | `/api/babies/:id/members` | Yes | List caregivers (owner) |
+| DELETE | `/api/babies/:id/members/:memberUserId` | Yes | Remove caregiver |
+| DELETE | `/api/babies/:id/invites/:inviteId` | Yes | Revoke invite |
+| GET | `/api/invites` | Yes | Pending invites for current user |
+| POST | `/api/invites/:inviteId/accept` | Yes | Accept invite |
 | GET | `/api/todos` | Yes | List current user's to-dos |
 | POST | `/api/todos` | Yes | Create to-do (`{ "text": "..." }`) |
 | PATCH | `/api/todos/:id` | Yes | Update to-do (`text`, `completed`) |
 | DELETE | `/api/todos/:id` | Yes | Delete to-do |
 | DELETE | `/api/todos/completed` | Yes | Delete all completed to-dos |
+| POST | `/api/babies/:babyId/events/batch` | Yes | Create multiple events in one request |
+| POST | `/api/events/:id/restore` | Yes | Restore a soft-deleted event |
 
-Uploaded baby photos are served from `/uploads/babies/` (proxied to the API in dev).
+Uploaded baby photos are served from `/uploads/babies/` (proxied to the API in dev). Event list supports `q` text search and soft-deleted rows via `includeDeleted=true`.
 
 ## Event types
 
@@ -202,3 +245,15 @@ Uploaded baby photos are served from `/uploads/babies/` (proxied to the API in d
 | `npm run db:generate` | Generate Drizzle migrations |
 | `npm run db:migrate` | Apply migrations |
 | `npm run db:studio` | Open Drizzle Studio |
+| `npm run test -w @babycheck/web` | Run Vitest unit tests |
+
+## Engineering
+
+- **CI** (GitHub Actions): lint, unit tests, build
+- **API rate limiting** (global + stricter auth)
+- **Structured request logging** with `X-Request-Id`
+- **Soft-delete** events + restore
+- **Batch event create** endpoint
+- **Photo pipeline**: resize/compress to WebP on upload
+- **PWA** service worker + offline event queue
+- **Vitest** coverage for filter/insights helpers
