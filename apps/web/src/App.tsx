@@ -3,7 +3,12 @@ import { useAuth } from "./context/AuthContext";
 import AppShell from "./components/layout/AppShell";
 import Diary from "./pages/Diary";
 import Login from "./pages/Login";
+import Milestones from "./pages/Milestones";
 import Register from "./pages/Register";
+import Today from "./pages/Today";
+import Trends from "./pages/Trends";
+import Search from "./pages/Search";
+import Calendar from "./pages/Calendar";
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const { user, loading } = useAuth();
@@ -37,6 +42,11 @@ export default function App() {
         }
       >
         <Route index element={<Diary />} />
+        <Route path="today" element={<Today />} />
+        <Route path="trends" element={<Trends />} />
+        <Route path="milestones" element={<Milestones />} />
+        <Route path="search" element={<Search />} />
+        <Route path="calendar" element={<Calendar />} />
       </Route>
       <Route path="/baby" element={<Navigate to="/" replace />} />
       <Route path="/log" element={<Navigate to="/" replace />} />
