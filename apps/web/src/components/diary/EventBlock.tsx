@@ -23,6 +23,7 @@ export default function EventBlock({
   return (
     <div
       role="button"
+      aria-label={`${formatEventTime(event.occurredAt)} ${getEventSummary(event)}`}
       tabIndex={0}
       className={`absolute z-20 touch-none rounded-lg border px-1 py-0.5 text-left shadow-sm overflow-hidden transition select-none ${
         isDragging
