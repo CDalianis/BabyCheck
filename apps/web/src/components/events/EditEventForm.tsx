@@ -6,6 +6,7 @@ import * as eventsApi from "../../api/events";
 import { buildPayloadFromForm, toLocalDateTimeInput } from "../../utils/eventForm";
 import { btnPrimaryClass, btnSecondaryClass, inputClass, labelClass } from "../ui/form";
 import EventTypeFields from "./EventTypeFields";
+import { useToast } from "../../context/ToastContext";
 
 interface EditEventFormProps {
   event: BabyEvent;
@@ -14,6 +15,7 @@ interface EditEventFormProps {
 
 export default function EditEventForm({ event, onSuccess }: EditEventFormProps) {
   const queryClient = useQueryClient();
+  const { showToast } = useToast();
   const [error, setError] = useState<string | null>(null);
 
   const updateMutation = useMutation({
@@ -27,9 +29,16 @@ export default function EditEventForm({ event, onSuccess }: EditEventFormProps) 
         payload: body.payload as unknown as UpdateEventInput["payload"],
         notes: body.notes,
       }),
-    onSuccess: () => {
+    onSuccess: ({ event: deletedEvent }) => {
       void queryClient.invalidateQueries({ queryKey: ["events"] });
       onSuccess();
+      showToast({
+        message: "Event deleted",
+        undo: async () => {
+          await eventsApi.restoreEvent(deletedEvent.id);
+          await queryClient.invalidateQueries({ queryKey: ["events"] });
+        },
+      });
     },
     onError: () => setError("Failed to update event"),
   });
