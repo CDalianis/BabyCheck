@@ -7,6 +7,7 @@ import { buildPayloadFromForm, fieldName } from "../../utils/eventForm";
 import { btnPrimaryClass, btnSecondaryClass, inputClass, labelClass } from "../ui/form";
 import { useBaby } from "../../context/BabyContext";
 import EventTypeFields from "./EventTypeFields";
+import { queueEvent } from "../../utils/offlineQueue";
 
 interface LogEventEntry {
   id: string;
@@ -33,10 +34,18 @@ export default function LogEventForm({
 
   const mutation = useMutation({
     mutationFn: async (inputs: CreateEventInput[]) => {
-      await Promise.all(
-        inputs.map((input) => eventsApi.createEvent(activeBaby!.id, input))
-      );
+      if (!navigator.onLine) {
+        inputs.forEach((input) => queueEvent(activeBaby!.id, input));
+        return;
+      }
+      if (inputs.length > 1) {
+        await eventsApi.createEventsBatch(activeBaby!.id, inputs);
+      } else {
+        await eventsApi.createEvent(activeBaby!.id, inputs[0]);
+      }
     },
+    onMutate: () =>
+      queryClient.cancelQueries({ queryKey: ["events", activeBaby?.id] }),
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: ["events"] });
       onSuccess();
