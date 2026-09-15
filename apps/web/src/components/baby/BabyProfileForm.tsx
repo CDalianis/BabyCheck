@@ -4,6 +4,7 @@ import * as babiesApi from "../../api/babies";
 import { ApiClientError } from "../../api/client";
 import { useBaby } from "../../context/BabyContext";
 import { resolveBabyPhotoUrl } from "../../utils/photo";
+import CaregiversPanel from "./CaregiversPanel";
 import {
   btnPrimaryClass,
   btnSecondaryClass,
@@ -243,6 +244,8 @@ export default function BabyProfileForm({ onSuccess }: BabyProfileFormProps) {
             ? "Save changes"
             : "Create baby profile"}
       </button>
+
+      {activeBaby && <CaregiversPanel />}
     </form>
   );
 }
