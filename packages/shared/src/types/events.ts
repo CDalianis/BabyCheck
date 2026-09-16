@@ -48,6 +48,7 @@ export interface BabyEvent<T extends EventType = EventType> {
   occurredAt: string;
   payload: EventPayloadMap[T];
   notes: string | null;
+  deletedAt?: string | null;
   createdAt: string;
   updatedAt: string;
 }
