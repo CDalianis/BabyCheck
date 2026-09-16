@@ -10,3 +10,7 @@ export * from "./schemas/baby.js";
 export * from "./schemas/events.js";
 export * from "./types/todo.js";
 export * from "./schemas/todo.js";
+export * from "./types/milestone.js";
+export * from "./schemas/milestone.js";
+export * from "./types/caregiver.js";
+export * from "./schemas/caregiver.js";
