@@ -48,6 +48,24 @@
   --theme-slot-hover: rgb(236 72 153 / 0.12);
 }
 
+[data-mode="dark"] {
+  color-scheme: dark;
+  --theme-page: #0f172a;
+  --theme-surface: #172033;
+  --theme-surface-hover: #253249;
+  --theme-surface-elevated: #26344d;
+  --theme-nav: #111827;
+  --theme-border: #475569;
+  --theme-border-subtle: #334155;
+  --theme-text: #f1f5f9;
+  --theme-muted: #a8b4c6;
+  --theme-auth-from: #0f172a;
+  --theme-auth-via: #172033;
+  --theme-auth-to: #1e293b;
+  --theme-grid-line: #334155;
+  --theme-today-header: #26344d;
+}
+
 @layer base {
   html {
     color-scheme: light;
