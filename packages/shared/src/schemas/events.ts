@@ -90,13 +90,23 @@ export const listEventsQuerySchema = z.object({
   type: z.enum(EVENT_TYPES).optional(),
   from: z.string().datetime().optional(),
   to: z.string().datetime().optional(),
-  limit: z.coerce.number().int().min(1).max(100).default(50),
+  q: z.string().trim().max(100).optional(),
+  includeDeleted: z
+    .union([z.boolean(), z.enum(["true", "false"])])
+    .optional()
+    .transform((v) => v === true || v === "true"),
+  limit: z.coerce.number().int().min(1).max(200).default(50),
   offset: z.coerce.number().int().min(0).default(0),
+});
+
+export const createEventsBatchSchema = z.object({
+  events: z.array(createEventSchema).min(1).max(20),
 });
 
 export type CreateEventInput = z.infer<typeof createEventSchema>;
 export type UpdateEventInput = z.infer<typeof updateEventSchema>;
 export type ListEventsQuery = z.infer<typeof listEventsQuerySchema>;
+export type CreateEventsBatchInput = z.infer<typeof createEventsBatchSchema>;
 
 export function validatePayloadForType(
   type: keyof typeof payloadSchemas,
